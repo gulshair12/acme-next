@@ -4,6 +4,10 @@ import { EyeIcon } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import Image from "next/image";
 import { Button } from "./ui/button";
+import { Author, Startup } from "@/sanity/types";
+
+export type StartupTypeCard = Omit<Startup, "author"> & {author?: Author} 
+
 const StartupCard = ({ post }: { post: StartupTypeCard }) => {
   const {
     _createdAt,
@@ -15,6 +19,8 @@ const StartupCard = ({ post }: { post: StartupTypeCard }) => {
     image,
     description,
   } = post;
+
+  
   return (
     <li className="startup-card group">
       <div className="flex-between">
@@ -36,7 +42,7 @@ const StartupCard = ({ post }: { post: StartupTypeCard }) => {
         </div>
         <Link href={`/user/${author?._id}`}>
           <Image
-            src="https://placehold.co/48*48"
+            src="https://via.placehold.co/48*48"
             alt="placeholder"
             width={48}
             height={48}
@@ -48,7 +54,7 @@ const StartupCard = ({ post }: { post: StartupTypeCard }) => {
       <Link href={`/startup/${_id}`}>
         <p className="startup-card_desc">{description}</p>
 
-        <img src={image} alt="placeholder" className="startup-card_img" />
+        <img src={image} alt="starup_image" className="startup-card_img" />
       </Link>
 
       <div className="flex-between gap-3 mt-5">

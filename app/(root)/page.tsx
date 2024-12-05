@@ -1,5 +1,8 @@
 import SearchForm from "@/components/SearchForm";
-import StartupCard from "@/components/StartupCard";
+import StartupCard, { StartupTypeCard } from "@/components/StartupCard";
+import { client } from "@/sanity/lib/client";
+import { sanityFetch, SanityLive } from "@/sanity/lib/live";
+import { STARTUP_QUERY } from "@/sanity/lib/queries";
 
 export default async function Home({
   searchParams,
@@ -7,23 +10,24 @@ export default async function Home({
   searchParams: Promise<{ query?: string }>;
 }) {
   const query = (await searchParams).query;
+  const { data: posts } = await sanityFetch({ query: STARTUP_QUERY });
 
-  const posts = [
-    {
-      _createdAt: new Date(),
-      views: 55,
-      author: {
-        _id: 1,
-        name: "John Doe",
-      },
-      _id: 1,
-      title: "Startup 1",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      image:
-        "https://www.google.com/url?sa=i&url=https%3A%2F%2Fvariety.com%2F2022%2Fdigital%2Fnews%2Fwall-e-criterion-4k-blu-ray-release-1235364680%2F&psig=AOvVaw1V1Put3FeOFZ8FRilx2gpP&ust=1731934538694000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCPD7g4q144kDFQAAAAAdAAAAABAE",
-      category: "Robots",
-    },
-  ];
+  // const posts = [
+  //   {
+  //     _createdAt: new Date(),
+  //     views: 55,
+  //     author: {
+  //       _id: 1,
+  //       name: "John Doe",
+  //     },
+  //     _id: 1,
+  //     title: "Startup 1",
+  //     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  //     image:
+  //       "https://www.google.com/url?sa=i&url=https%3A%2F%2Fvariety.com%2F2022%2Fdigital%2Fnews%2Fwall-e-criterion-4k-blu-ray-release-1235364680%2F&psig=AOvVaw1V1Put3FeOFZ8FRilx2gpP&ust=1731934538694000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCPD7g4q144kDFQAAAAAdAAAAABAE",
+  //     category: "Robots",
+  //   },
+  // ];
 
   return (
     <>
@@ -55,6 +59,8 @@ export default async function Home({
           )}
         </ul>
       </section>
+
+      <SanityLive />
     </>
   );
 }
